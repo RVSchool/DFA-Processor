@@ -16,12 +16,13 @@ void DFAState(string str){
     char c;
     int s = 1;
     //cout << "Current State: " << s << endl;
+    bool wwwCheck = true;
     for(int i = 0; i < str.length(); i++){
         c = str.at(i);
         cout << "Character read: " << c << endl;
         cout << "Current State: q" << s << endl;
         
-        //states before 4
+        /*
         if(s < 4){
             if(c == 'w'){
                 s++;
@@ -79,6 +80,10 @@ void DFAState(string str){
                 s++;
                 continue;
             }
+            else if(c == 'n'){
+                s = 11;
+                continue;
+            }
             else{
                 cout << "trap state6" << endl;
                 continue;
@@ -89,15 +94,107 @@ void DFAState(string str){
                 s++;
                 continue;
             }
+            else if(c == '.'){
+                s = 12;
+                continue;
+            }
             else{
                 cout << "trap state5" << endl;
                 continue;
             }
         }
+         */
+        
+        //checking for only valid characters
+        if(islower(c)){
+            if(s < 4 && wwwCheck){
+                if(c == 'w'){
+                    s++;
+                    continue;
+                }
+                else{
+                    s = 6;
+                    wwwCheck = false;
+                    continue;
+                }
+            
+            }
+            else if(s == 5){
+                s++;
+                continue;
+            }
+            else if(s == 6 || s == 7){
+                continue;
+            }
+            else if(s == 8){
+                if(c == 'c'){
+                    s++;
+                    continue;
+                }
+            }
+            else if(s == 9){
+                if(c == 'n'){
+                    s = 10;
+                    continue;
+                }
+                else if(c == 'o'){
+                    s = 11;
+                    continue;
+                }
+            }
+            else if(s == 11){
+                if(c == 'm'){
+                    s++;
+                    continue;
+                }
+            }
+            else if(s == 13){
+                if(c == 'c'){
+                    s++;
+                    continue;
+                }
+            }
+            else if(s == 14){
+                if(c == 'n'){
+                    s++;
+                    continue;
+                }
+            }
+            break;
+        }
+        else if(c == '.'){
+            switch (s) {
+                case 4:
+                    s++;
+                    continue;
+                case 6:
+                    s = 8;
+                    continue;
+                case 7:
+                    s++;
+                    continue;
+                case 11:
+                    s = 13;
+                    continue;
+                default:
+                    cout << "error on . switch" << endl;
+            }
+            break;
+        }
+        else{
+            cout << "Invalid character read" << endl;
+            break;
+        }
        
         
     }
-    cout << "Finish State: q" << s << endl;
+    if(s == 10 || s == 12 || s == 15){
+        cout << "Finish State: q" << s << endl;
+    }
+    else{
+        cout << "Trap State: q" << s << endl;
+    }
+    
 }
 
 int
