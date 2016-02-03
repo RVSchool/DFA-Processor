@@ -21,8 +21,9 @@ main( int argc, char *argv[] )
 {
     istream *br;
     ifstream infile;
-    char req;
+    string req;
     string str;
+    bool complete;
     
     if( argc == 1 )
         br = &cin;
@@ -41,14 +42,20 @@ main( int argc, char *argv[] )
     }
     
     do {
+        complete = false;
         cout << "Would you like to enter a string?" << endl;
         cin >> req;
-        if(req == 'y'){
+        if(req == "y"){
             cout << "Enter a string: " << endl;
             cin >> str;
             DFAState(str);
+            complete = true;
         }
-    } while (req == 'y');
+        else if(req != "n"){
+            cout << "Expecting only 'y' or 'n'" << endl;
+            complete = true;
+        }
+    } while (complete);
     cout << "Program terminated" << endl;
     return 0;
 }
